@@ -157,7 +157,7 @@ def main():
     total_cases = pd.DataFrame(df_copy["sum_of_cases"])
 
 
-    st.markdown("Pie Chart - Total COVID cases Distribution")
+    st.title("Pie Chart - Total COVID cases Distribution")
     plt.pie(sum_of_cases, shadow=True,startangle=90)
     plt.legend(total_cases.index,title="name of countries",loc="center left",bbox_to_anchor=(1, 0, 0.5, 1))
     plt.show()
