@@ -44,7 +44,7 @@ def main():
     st.subheader("Comapre Covid Cases in Different Countries")
     all_countries_names = list(df.index.values)
     selected_columns_names = []
-    selected_columns_names = st.multiselect("select countries to view max infection rate", all_countries_names, default='India', key="compare")
+    selected_columns_names = st.multiselect("Select Countries To Plot", all_countries_names, default='India', key="compare")
     for i in selected_columns_names:
         df.loc[i].plot()
     plt.legend()
@@ -60,7 +60,7 @@ def main():
     st.subheader("Max Infection Rate")
     all_countries_name = list(df.index.values)
     selected_columns_names_for_max_infection = []
-    selected_columns_names_for_max_infection = st.multiselect("Select Countries To Plot", all_countries_name, default='India', key="max-infection")
+    selected_columns_names_for_max_infection = st.multiselect("Select Countries To View Max Infection Rate", all_countries_name, default='India', key="max-infection")
     for i in selected_columns_names_for_max_infection:
         max_infection_rate = df.loc[i].diff().max()
         st.write('Max Infection Rate in ' + str(i) + ' = ' + str(max_infection_rate))   
