@@ -44,7 +44,7 @@ def main():
     st.subheader("Comapre Covid Cases in Different Countries")
     all_countries_names = list(df.index.values)
     selected_columns_names = []
-    selected_columns_names = st.multiselect("Select Countries To Plot", all_countries_names, default='India', key="compare")
+    selected_columns_names = st.multiselect("select countries to view max infection rate", all_countries_names, default='India', key="compare")
     for i in selected_columns_names:
         df.loc[i].plot()
     plt.legend()
@@ -177,8 +177,8 @@ def main():
     st.sidebar.header("About App")
     st.sidebar.info("Industrial Training Project")
     st.sidebar.header("Get Datasets")
-    st.sidebar.markdown("[COVID 19 DataSet](https://raw.githubusercontent.com/nanak-singh/covid-data-analysis/main/Dataset/covdataset.csv)")
-    st.sidebar.markdown("[GDP DataSet](https://raw.githubusercontent.com/nanak-singh/covid-data-analysis/main/Dataset/GDP.csv)")
+    st.sidebar.markdown("[COVID 19 DataSet](https://raw.githubusercontent.com/prabhnoorkaur20/covid-data-analysis/main/Dataset/covdataset.csv)")
+    st.sidebar.markdown("[GDP DataSet](https://raw.githubusercontent.com/prabhnoorkaur20/covid-data-analysis/main/Dataset/GDP.csv)")
     st.sidebar.header("Made By")
     st.sidebar.info("""
         Prabhnoor Kaur\n
