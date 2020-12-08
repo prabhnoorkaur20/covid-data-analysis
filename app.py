@@ -17,13 +17,40 @@ def main():
 
     df = load_data()
 
+    countries = list(df.index)
+    df_copy = df.copy()
+    max_infection_rates = []
+    for c in countries:
+        max_infection_rates.append(df_copy.loc[c].diff().max())
+    df_copy["max_infection_rate"] = max_infection_rates
+
+
+    corona_data = pd.DataFrame(df_copy["max_infection_rate"])
+
+    @st.cache(persist=True)
+    def load_data2():
+        GDP_dataset = pd.read_csv("Dataset/GDP.csv", encoding='latin1')
+        GDP_dataset.drop(["General government net lending/borrowing (% of GDP)","Inflation rate, average consumer prices"],axis=1,inplace=True)
+        GDP_dataset.set_index("Countries", inplace = True)
+        data = corona_data.join(GDP_dataset, how="inner")
+        return data
+
+    df2 = load_data2()
+
     st.subheader("Explore Dataset")
-    if st.checkbox("Show Dataset"):
-        number = st.number_input("Number of Rows to View", min_value=1, step=1)
-        if st.button("All rows") :
+    if st.checkbox("Show COVID Dataset"):
+        number = st.number_input("Number of Rows to View", min_value=1, step=1, key=1)
+        if st.button("All rows", key=1) :
             st.dataframe(df)
         else:
             st.dataframe(df.head(number))
+
+    if st.checkbox("Show GDP Dataset"):
+        number2 = st.number_input("Number of Rows to View", min_value=1, step=1, key=2)
+        if st.button("All rows", key=2) :
+            st.dataframe(df2)
+        else:
+            st.dataframe(df2.head(number2))
     
 
     if st.button("Show Countries Names"):
@@ -66,28 +93,7 @@ def main():
         st.write('Max Infection Rate in ' + str(i) + ' = ' + str(max_infection_rate))   
 
     
-    countries = list(df.index)
-    df_copy = df.copy()
-    max_infection_rates = []
-    for c in countries:
-        max_infection_rates.append(df_copy.loc[c].diff().max())
-    df_copy["max_infection_rate"] = max_infection_rates
 
-
-    corona_data = pd.DataFrame(df_copy["max_infection_rate"])
-
-
-    
-    
-    @st.cache(persist=True)
-    def load_data2():
-        GDP_dataset = pd.read_csv("Dataset/GDP.csv", encoding='latin1')
-        GDP_dataset.drop(["General government net lending/borrowing (% of GDP)","Inflation rate, average consumer prices"],axis=1,inplace=True)
-        GDP_dataset.set_index("Countries", inplace = True)
-        data = corona_data.join(GDP_dataset, how="inner")
-        return data
-
-    df2 = load_data2()
 
     
     
